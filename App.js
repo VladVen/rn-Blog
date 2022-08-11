@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React from "react";
+import {Platform, StyleSheet, View} from 'react-native';
+import {useFonts} from "expo-font";
+import Preloader from "./src/Components/CustomComponent/Preloader";
+import {AppNavigationIOS} from "./src/Navigation/AppNavigationIOS";
+import {AppNavigationAndroid} from "./src/Navigation/AppNavigationAndroid";
+import MyDrawer from "./src/Navigation/Drawer";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+    const [fonts] = useFonts({
+        'OpenSans-Italic': require('./assets/fonts/OpenSans-Italic.ttf'),
+        'OpenSans-Bold': require('./assets/fonts/OpenSans-BoldItalic.ttf')
+    })
+    if (!fonts) {
+        return <View style={styles.preloader}><Preloader/></View>
+    }
+    const Navigation = Platform.OS === "ios" ?  <AppNavigationIOS/> : <AppNavigationAndroid />
+    return (
+        <MyDrawer />
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    preloader: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
