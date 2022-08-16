@@ -1,24 +1,31 @@
-import React, {useState} from "react";
-import {Alert, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useEffect, useState} from "react";
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 import DoubleClick from "react-native-double-tap";
+import {useDispatch} from "react-redux";
+import {toggleBooked} from "../Store/reducers/post";
 
 const Post = ({post, onOpen}) => {
 
     const [buttonColor, setButtonColor] = useState('white')
+    const dispatch = useDispatch()
 
-
-    const changeColor = () => {
-        if (buttonColor === "white") {
+    useEffect(() => {
+        if (post.booked) {
             setButtonColor("red");
         } else {
             setButtonColor("white");
         }
+    }, [post.booked])
+
+
+    const changeBooked = () => {
+        dispatch(toggleBooked(post.id))
     }
 
 
     return (
-        <DoubleClick doubleTap={changeColor}
+        <DoubleClick doubleTap={changeBooked}
                      singleTap={() => onOpen(post)}
                      delay={500}
         >
@@ -32,7 +39,7 @@ const Post = ({post, onOpen}) => {
                             <Text style={styles.title}>
                                 {new Date(post.date).toLocaleDateString()}
                             </Text>
-                            <TouchableOpacity onPress={changeColor}>
+                            <TouchableOpacity onPress={changeBooked}>
                                 <MaterialIcons name="favorite" size={24} color={buttonColor}/>
                             </TouchableOpacity>
                         </View>

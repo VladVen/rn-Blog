@@ -2,10 +2,11 @@ import 'react-native-gesture-handler';
 import React from "react";
 import {Platform, StyleSheet, View} from 'react-native';
 import {useFonts} from "expo-font";
+import {Provider} from "react-redux";
+
 import Preloader from "./src/Components/CustomComponent/Preloader";
-import {AppNavigationIOS} from "./src/Navigation/AppNavigationIOS";
-import {AppNavigationAndroid} from "./src/Navigation/AppNavigationAndroid";
 import MyDrawer from "./src/Navigation/Drawer";
+import store from "./src/Store";
 
 export default function App() {
 
@@ -16,9 +17,10 @@ export default function App() {
     if (!fonts) {
         return <View style={styles.preloader}><Preloader/></View>
     }
-    const Navigation = Platform.OS === "ios" ?  <AppNavigationIOS/> : <AppNavigationAndroid />
     return (
+        <Provider store={store}>
         <MyDrawer />
+        </Provider>
     );
 }
 

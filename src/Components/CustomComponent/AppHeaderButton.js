@@ -10,7 +10,7 @@ const AppHeaderButton = (props) => {
         <HeaderButton {...props}
                       iconSize={24}
                       IconComponent={Ionicons}
-                      color={props.color ? props.color : Platform.OS === 'android' ? 'white' : Theme.MAIN_COLOR}
+                      color={ props.color ? props.color : Platform.OS === 'android' ? 'white' : Theme.MAIN_COLOR}
         />
     )
 }

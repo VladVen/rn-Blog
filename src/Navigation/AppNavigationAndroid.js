@@ -43,7 +43,7 @@ function BottomNavigatorAndroid(props) {
         }} shifting={true} barStyle={{
             backgroundColor: Theme.MAIN_COLOR,
             borderColor: Theme.MAIN_COLOR,
-            borderWidth: 2,
+            borderWidth: 3,
             borderTopStartRadius: 10,
             borderTopEndRadius: 10
         }}>

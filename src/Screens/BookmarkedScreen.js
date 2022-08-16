@@ -1,12 +1,12 @@
 import React from "react";
-import {DATA} from "../data";
+import {useSelector} from "react-redux";
 
 import PostLIst from "../Components/PostLIst";
 
 
 const BookmarkedScreen = ({navigation}) => {
 
-    const booked = DATA.filter(item => item.booked === true)
+    const booked = useSelector(state => state.post.bookedPosts)
 
     return(
         <PostLIst data={booked} navigation={navigation}/>

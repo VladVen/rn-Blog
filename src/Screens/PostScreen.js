@@ -1,16 +1,26 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {Alert, Button, Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import {DATA} from "../data";
 import Theme from "../theme";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
+import {useDispatch, useSelector} from "react-redux";
+import {delPost, toggleBooked} from "../Store/reducers/post";
+import {useState} from "react";
 
 
 const PostScreen = ({route, navigation}) => {
+    const dispatch = useDispatch()
     const {postId} = route.params;
 
-    const post = DATA.find(item => item.id === postId)
+    const post = useSelector(state => state.post.posts.find(item => item.id === postId))
+    const booked = useSelector(state => state.post.bookedPosts.some(item => item.id === postId))
 
+    const buttonColor = booked ? 'yellow': 'white'
+
+    const changeBooked = () => {
+        dispatch(toggleBooked(postId))
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -19,14 +29,14 @@ const PostScreen = ({route, navigation}) => {
                 <HeaderButtons HeaderButtonComponent={AppHeaderButton}>
                     <Item title={'bookmark'}
                           iconName={'star'}
-                          color={post.booked &&'yellow'}
-                          onPress={() => console.log('Pressed')}
+                          color={buttonColor}
+                          onPress={changeBooked}
                     />
                 </HeaderButtons>
             )
         })
 
-    }, [])
+    }, [changeBooked])
 
     const removeHandler = () => {
         Alert.alert(
@@ -40,8 +50,8 @@ const PostScreen = ({route, navigation}) => {
                 {
                     text: "Confirm",
                     onPress: () => {
-                        // navigation.goBack()
-                        // return DATA.filter(item => item.id !== post.id)
+                         navigation.goBack()
+                        dispatch(delPost(post.id))
                     },
                     style: "positive",
                 },

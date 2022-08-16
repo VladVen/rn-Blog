@@ -1,11 +1,14 @@
 import React, {useEffect} from "react";
-import {DATA} from "../data";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
 import PostLIst from "../Components/PostLIst";
+import {useDispatch, useSelector} from "react-redux";
+import {getPost} from "../Store/reducers/post";
 
 
 const MainScreen = ({navigation}) => {
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         navigation.setOptions({
@@ -18,12 +21,12 @@ const MainScreen = ({navigation}) => {
                 </HeaderButtons>
             )
         })
+        dispatch(getPost())
     }, [])
 
-
-
+    const Data = useSelector(state => state.post.posts)
     return(
-        <PostLIst data={DATA} navigation={navigation}/>
+        <PostLIst data={Data} navigation={navigation}/>
     )
 }
 
