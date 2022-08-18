@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
     Button,
     Image,
@@ -15,12 +15,14 @@ import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
 import Theme from "../theme";
 import {useDispatch} from "react-redux";
 import {addPost} from "../Store/reducers/post";
+import PhotoPicker from "../Components/CustomComponent/PhotoPicker";
 
 
 const CreateScreen = ({navigation}) => {
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const dispatch = useDispatch()
+    const imageRef = useRef()
 
     useEffect(() => {
         navigation.setOptions({
@@ -35,15 +37,16 @@ const CreateScreen = ({navigation}) => {
         })
     }, [])
 
-    const img = 'https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg'
 
     const createHandler = () => {
-        dispatch(addPost({title, text, img}))
+        dispatch(addPost({title, text, img: imageRef.current}))
         setTitle('')
         setText('')
         navigation.navigate('Main')
     }
-
+    const PhotoHandler = uri => {
+        imageRef.current = uri
+    }
     return (
         <ScrollView>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -60,14 +63,10 @@ const CreateScreen = ({navigation}) => {
                                    multiline
                         />
                     </View>
-                    <Image style={{
-                        width: '100%',
-                        height: 200,
-                        marginBottom: 10
-                    }}
-                           source={{uri: img}}/>
+                    <PhotoPicker onPick={PhotoHandler}/>
                     <Button title={'Create post'} color={Theme.MAIN_COLOR}
                             onPress={createHandler}
+                            disabled={!text || !imageRef.current}
                     />
                 </View>
             </TouchableWithoutFeedback>

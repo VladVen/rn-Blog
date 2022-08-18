@@ -1,4 +1,5 @@
 import {DATA} from "../../data";
+import {DB} from "../../db";
 
 const GET_POSTS = 'GET-POSTS'
 const TOGGLE_BOOKED = 'ADD_BOOKED'
@@ -38,10 +39,10 @@ const PostReducer = (state = initialState, action) => {
                 posts: state.posts.filter(item => item.id !== action.id),
                 bookedPosts: state.bookedPosts.filter(item => item.id !== action.id)
             }
-            case ADD_POST :
+        case ADD_POST :
             return {
                 ...state,
-                posts: [{...action.payload},...state.posts]
+                posts: [{...action.payload}, ...state.posts]
             }
         default:
             return state
@@ -49,10 +50,17 @@ const PostReducer = (state = initialState, action) => {
 }
 
 
-export const getPost = () => ({
-    type: GET_POSTS,
-    payload: DATA
-})
+export const getPost = () => {
+    return async dispatch => {
+        const posts = await DB.getPost()
+        return (
+            {
+                type: GET_POSTS,
+                payload: posts
+            }
+        )
+    }
+}
 export const toggleBooked = (id) => ({
     type: TOGGLE_BOOKED,
     id

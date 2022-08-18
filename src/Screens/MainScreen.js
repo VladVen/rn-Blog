@@ -16,7 +16,7 @@ const MainScreen = ({navigation}) => {
                 <HeaderButtons HeaderButtonComponent={AppHeaderButton}>
                     <Item title={'Take Photo'}
                           iconName={'ios-camera'}
-                          onPress={() => navigation.navigate('About App')}
+                          onPress={() => navigation.navigate('CreateScreen')}
                     />
                 </HeaderButtons>
             )
