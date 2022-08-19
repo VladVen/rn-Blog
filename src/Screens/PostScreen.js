@@ -20,7 +20,7 @@ const PostScreen = ({route, navigation}) => {
     const buttonColor = booked ? 'yellow' : 'white'
 
     const changeBooked = () => {
-        dispatch(toggleBooked(postId))
+        dispatch(toggleBooked(post))
     }
 
     useEffect(() => {

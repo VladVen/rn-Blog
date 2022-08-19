@@ -39,7 +39,9 @@ const CreateScreen = ({navigation}) => {
 
 
     const createHandler = () => {
-        dispatch(addPost({title, text, img: imageRef.current}))
+        dispatch(addPost({
+            title, text, img: imageRef.current, date: new Date().toJSON()
+        }))
         setTitle('')
         setText('')
         navigation.navigate('Main')

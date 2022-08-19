@@ -1,14 +1,24 @@
 import React, {useEffect} from "react";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
-import PostLIst from "../Components/PostLIst";
+import PostList from "../Components/PostLIst";
 import {useDispatch, useSelector} from "react-redux";
 import {getPost} from "../Store/reducers/post";
+import Preloader from "../Components/CustomComponent/Preloader";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
+import Theme from "../theme";
 
 
 const MainScreen = ({navigation}) => {
 
     const dispatch = useDispatch()
+    const {loading} = useSelector(state=> state.post.loading)
+
+    if(loading) {
+        return <View style={styles.preloader}>
+            <ActivityIndicator color={Theme.MAIN_COLOR} size={'large'}/>
+        </View>
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -26,10 +36,16 @@ const MainScreen = ({navigation}) => {
 
     const Data = useSelector(state => state.post.posts)
     return(
-        <PostLIst data={Data} navigation={navigation}/>
+        <PostList data={Data} navigation={navigation}/>
     )
 }
 
-
+const styles = StyleSheet.create({
+    preloader: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
 
 export default MainScreen

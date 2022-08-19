@@ -20,7 +20,7 @@ const Post = ({post, onOpen}) => {
 
 
     const changeBooked = () => {
-        dispatch(toggleBooked(post.id))
+        dispatch(toggleBooked(post))
     }
 
 

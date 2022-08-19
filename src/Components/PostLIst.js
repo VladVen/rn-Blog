@@ -6,7 +6,7 @@ import React, {useEffect} from "react";
 import Theme from "../theme";
 
 
-const PostLIst = ({data, navigation}) => {
+const PostList = ({data, navigation}) => {
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
@@ -39,7 +39,9 @@ const PostLIst = ({data, navigation}) => {
         <View style={styles.container}>
             <FlatList data={data}
                       keyExtractor={item => item.id}
-                      renderItem={({item}) => (<Post post={item} onOpen={goToPost}/>)}/>
+                      renderItem={({item}) => (<Post post={item} onOpen={goToPost}/>)}
+                      inverted
+            />
 
         </View>
     )
@@ -60,4 +62,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default PostLIst
+export default PostList

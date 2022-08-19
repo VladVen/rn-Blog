@@ -1,4 +1,4 @@
-import {DATA} from "../../data";
+import * as FileSystem from 'expo-file-system';
 import {DB} from "../../db";
 
 const GET_POSTS = 'GET-POSTS'
@@ -9,7 +9,8 @@ const ADD_POST = 'ADD_POST'
 
 const initialState = {
     posts: [],
-    bookedPosts: []
+    bookedPosts: [],
+    loading: true
 }
 
 
@@ -19,7 +20,8 @@ const PostReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: action.payload,
-                bookedPosts: action.payload.filter(item => item.booked)
+                bookedPosts: action.payload.filter(item => item.booked),
+                loading: false
             }
         case TOGGLE_BOOKED :
             const posts = state.posts.map(item => {
@@ -53,7 +55,7 @@ const PostReducer = (state = initialState, action) => {
 export const getPost = () => {
     return async dispatch => {
         const posts = await DB.getPost()
-        return (
+        dispatch (
             {
                 type: GET_POSTS,
                 payload: posts
@@ -61,21 +63,41 @@ export const getPost = () => {
         )
     }
 }
-export const toggleBooked = (id) => ({
-    type: TOGGLE_BOOKED,
-    id
-})
-export const delPost = (id) => ({
-    type: DEL_POST,
-    id
-})
-export const addPost = (post) => {
-    post.id = Date.now().toString()
-    post.date = new Date().toJSON()
-    return {
-        type: ADD_POST,
-        payload: post
+export const toggleBooked = (post) => async dispatch => {
+
+    await DB.savePost(post)
+    dispatch({
+        type: TOGGLE_BOOKED,
+        id: post.id
+    })
+}
+export const delPost = (id) =>async dispatch => {
+    await DB.removePost(id)
+    dispatch({
+        type: DEL_POST,
+        id
+    })
+}
+
+
+export const addPost = post => async dispatch => {
+    const file = post.img.split('/').pop()
+    const newPath = FileSystem.documentDirectory + file
+    try {
+        await FileSystem.moveAsync({
+            to: newPath,
+            from: post.img
+        })
+    } catch (e) {
+        console.log('Error: ' , e)
     }
+    const payload = {...post, img: newPath}
+    const id = await DB.addPost(payload)
+    payload.id = id
+    dispatch( {
+        type: ADD_POST,
+        payload
+    })
 }
 
 
