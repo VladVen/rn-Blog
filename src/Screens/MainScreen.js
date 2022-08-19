@@ -4,7 +4,6 @@ import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
 import PostList from "../Components/PostLIst";
 import {useDispatch, useSelector} from "react-redux";
 import {getPost} from "../Store/reducers/post";
-import Preloader from "../Components/CustomComponent/Preloader";
 import {ActivityIndicator, StyleSheet, View} from "react-native";
 import Theme from "../theme";
 

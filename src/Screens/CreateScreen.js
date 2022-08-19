@@ -1,15 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {
-    Button,
-    Image,
-    Keyboard,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableWithoutFeedback,
-    View
-} from "react-native";
+import {Button, Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
 import Theme from "../theme";

@@ -1,4 +1,4 @@
-import {FlatList, Linking, StyleSheet, Text, View} from "react-native";
+import {FlatList, StyleSheet, Text, View} from "react-native";
 import Post from "./Post";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import AppHeaderButton from "./CustomComponent/AppHeaderButton";

@@ -1,11 +1,10 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, Button, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Theme from "../theme";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import AppHeaderButton from "../Components/CustomComponent/AppHeaderButton";
 import {useDispatch, useSelector} from "react-redux";
 import {delPost, toggleBooked} from "../Store/reducers/post";
-import {useState} from "react";
 import ImageModal from "../Components/ImageModal";
 
 

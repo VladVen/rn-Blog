@@ -3,8 +3,6 @@ import React, {useCallback, useEffect} from "react";
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {useFonts} from "expo-font";
 import {Provider} from "react-redux";
-
-import Preloader from "./src/Components/CustomComponent/Preloader";
 import MyDrawer from "./src/Navigation/Drawer";
 import store from "./src/Store";
 import {DB} from "./src/db";
